@@ -78,7 +78,11 @@
     <button class="btn-share" onclick="compartilhar()">
       📲 Compartilhar no WhatsApp
     </button>
-    <button class="btn-new" onclick="proximaMensagem()">
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+    <button id="btn-claudio" onclick="setAssinatura('claudio')" style="flex:1;padding:9px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:13px;cursor:pointer">👤 Claudio</button>
+    <button id="btn-irmao" onclick="setAssinatura('irmao')" style="flex:1;padding:9px;border-radius:50px;border:1.5px solid #4f8ef7;background:#4f8ef7;color:#fff;font-size:13px;cursor:pointer;font-weight:bold">🙏 Irmão Claudio</button>
+  </div>
+  <button class="btn-new" onclick="proximaMensagem()">
       🔄 Nova mensagem
     </button>
     <div class="author">✨ Bom Dia por Irmão Claudio</div>
@@ -260,9 +264,24 @@ function proximaMensagem() {
   mostrarMensagem((indexAtual + 1) % mensagens.length);
 }
 
+let assinatura = 'irmao';
+
+function setAssinatura(tipo) {
+  assinatura = tipo;
+  document.getElementById('btn-claudio').style.background = tipo === 'claudio' ? '#4f8ef7' : '#1a3a7a';
+  document.getElementById('btn-claudio').style.color = tipo === 'claudio' ? '#fff' : '#7aabff';
+  document.getElementById('btn-claudio').style.fontWeight = tipo === 'claudio' ? 'bold' : 'normal';
+  document.getElementById('btn-claudio').style.borderColor = tipo === 'claudio' ? '#4f8ef7' : '#2a5aaa';
+  document.getElementById('btn-irmao').style.background = tipo === 'irmao' ? '#4f8ef7' : '#1a3a7a';
+  document.getElementById('btn-irmao').style.color = tipo === 'irmao' ? '#fff' : '#7aabff';
+  document.getElementById('btn-irmao').style.fontWeight = tipo === 'irmao' ? 'bold' : 'normal';
+  document.getElementById('btn-irmao').style.borderColor = tipo === 'irmao' ? '#4f8ef7' : '#2a5aaa';
+}
+
 function compartilhar() {
   const msg = mensagens[indexAtual % mensagens.length];
-  const texto = `🌅 *Bom Dia!* 🌅\n\n_${msg.sub}_\n\n${msg.frase.replace(/\n/g, ' ')}\n\n✨ _Enviado com carinho pelo Irmão Claudio_ 🙏`;
+  const nome = assinatura === 'irmao' ? 'Irmão Claudio 🙏' : 'Claudio 😊';
+  const texto = `🌅 *Bom Dia!* 🌅\n\n_${msg.sub}_\n\n${msg.frase.replace(/\n/g, ' ')}\n\n✨ _Enviado com carinho por ${nome}_`;
   const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
   window.open(url, '_blank');
 }
