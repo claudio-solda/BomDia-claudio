@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bom Dia - Claudio</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0a2e;
+    font-family: 'Georgia', serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  canvas { display: block; width: 100%; }
+  .bottom {
+    background: #0d1b3e;
+    padding: 16px;
+    text-align: center;
+  }
+  .data-label {
+    color: #7aabff;
+    font-size: 12px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .btn-share {
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-new {
+    background: #1a3a7a;
+    color: #7aabff;
+    border: 1px solid #2a5aaa;
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .author {
+    color: #3a5a9a;
+    font-size: 11px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <canvas id="canvas" width="420" height="420"></canvas>
+  <div class="bottom">
+    <div class="data-label" id="data-label"></div>
+    <button class="btn-share" onclick="compartilhar()">
+      📲 Compartilhar no WhatsApp
+    </button>
+    <button class="btn-new" onclick="proximaMensagem()">
+      🔄 Nova mensagem
+    </button>
+    <div class="author">✨ Bom Dia por Irmão Claudio</div>
+  </div>
+</div>
+
+<script>
+const mensagens = [
+  { frase: "Cada manhã traz uma nova chance\nde fazer algo bonito com a vida.\nAproveite cada momento.", sub: "com muita luz e paz" },
+  { frase: "Que a graça do Senhor\nesteja sobre você hoje\ne sempre.", sub: "com fé e esperança" },
+  { frase: "Um novo dia, uma nova\noportunidade de ser\nmelhor que ontem.", sub: "com força e determinação" },
+  { frase: "Que sua manhã seja tão\nbonita quanto seu coração\nque ama sem medir.", sub: "com amor e gratidão" },
+  { frase: "Deus vai na sua frente\nabrindo caminhos que\nseus olhos ainda não viram.", sub: "com fé que move montanhas" },
+  { frase: "Levanta, brilha e faz\nesse dia valer a pena.\nO mundo precisa de você!", sub: "com energia e alegria" },
+  { frase: "Que a paz que excede\ntodo entendimento guarde\nseu coração hoje.", sub: "com a paz do Senhor" },
+  { frase: "Cada amanhecer é\numa promessa de Deus\nque ainda acredita em você.", sub: "com bênçãos renovadas" },
+  { frase: "Sorria! Você foi escolhido\npara viver mais um dia\ncheio de possibilidades.", sub: "com alegria no coração" },
+  { frase: "Que seus passos hoje\nsejam guiados pela sabedoria\ne iluminados pela fé.", sub: "com sabedoria e luz" },
+  { frase: "O sol nasceu pra lembrar\nque após toda escuridão\nvem sempre a luz.", sub: "com renovação e esperança" },
+  { frase: "Seja a razão de alguém\nsorrir hoje. O mundo\nprecisa da sua bondade.", sub: "com generosidade e amor" },
+  { frase: "Confie no processo.\nDeus está trabalhando\nem seu favor agora.", sub: "com confiança em Deus" },
+  { frase: "Hoje é mais um presente\nde Deus. Use-o com\ngratidão e propósito.", sub: "com propósito e gratidão" },
+  { frase: "Que a sua semana seja\nbenta, frutífera e cheia\nda presença do Senhor.", sub: "com bênçãos abundantes" },
+  { frase: "Não existe obstáculo grande\ndemais para quem tem\nDeus ao seu lado.", sub: "com coragem e fé" },
+  { frase: "Bom dia! Que seu\ncafé seja quente e seu\ncoração mais ainda.", sub: "com calor humano" },
+  { frase: "A manhã chegou trazendo\nnovas esperanças e a\ncerteza do amor de Deus.", sub: "com amor incondicional" },
+  { frase: "Você é capaz, você\né forte, você é\nabençoado por Deus.", sub: "com autoestima e fé" },
+  { frase: "Que hoje você colha\nos frutos de tudo\nque plantou com amor.", sub: "com colheita abençoada" },
+  { frase: "Acorde com gratidão\nno coração e veja como\no dia muda de cor.", sub: "com gratidão e alegria" },
+  { frase: "Deus não dorme.\nEnquanto você descansou\nEle trabalhou por você.", sub: "com proteção divina" },
+  { frase: "Que sua fé seja maior\nque seus medos e sua\nalma mais forte que as pedras.", sub: "com fé inabalável" },
+  { frase: "Bom dia a você que\ncomeça mais um dia\ncom garra e determinação.", sub: "com garra e vontade" },
+  { frase: "Que o amor de Deus\nilumines cada passo\ndo seu caminho hoje.", sub: "com luz no caminho" },
+  { frase: "Você sobreviveu a todos\nseus piores dias.\nEsse também vai passar.", sub: "com perseverança" },
+  { frase: "Seja grato pelo\nnovo amanhecer. Nem\ntodos tiveram essa chance.", sub: "com humildade e gratidão" },
+  { frase: "Que sua jornada hoje\nseja leve, sua alma\nalerta e seu coração aberto.", sub: "com leveza e paz" },
+  { frase: "Deus tem planos maiores\npara você do que\nvocê consegue imaginar.", sub: "com fé nos planos de Deus" },
+  { frase: "Mais um dia para\nfazer diferença na vida\nde alguém. Não perca!", sub: "com missão e propósito" },
+  { frase: "Que seus sonhos sejam\ngrandes e sua coragem\nainda maior para realizá-los.", sub: "com sonhos e coragem" },
+];
+
+const TEMAS = [
+  { ceu1: '#0d1b4e', ceu2: '#1a3a7a', sol: '#FFD700', horizonte: '#FF6B35', frase_cor: '#FFF8DC', sub_cor: '#FFD700' },
+  { ceu1: '#1a0a3e', ceu2: '#3d1a6e', sol: '#FF9500', horizonte: '#FF4500', frase_cor: '#FFFFFF', sub_cor: '#FFB347' },
+  { ceu1: '#0a2a1a', ceu2: '#1a5a3a', sol: '#FFEF00', horizonte: '#FF8C00', frase_cor: '#F0FFF0', sub_cor: '#7CFC00' },
+  { ceu1: '#0a1a3e', ceu2: '#1a3a6e', sol: '#87CEEB', horizonte: '#4169E1', frase_cor: '#FFFFFF', sub_cor: '#87CEEB' },
+  { ceu1: '#2a0a0a', ceu2: '#6e1a1a', sol: '#FF6347', horizonte: '#DC143C', frase_cor: '#FFFAF0', sub_cor: '#FFD700' },
+];
+
+let indexAtual = -1;
+
+function getDiaDoAno() {
+  const agora = new Date();
+  const inicio = new Date(agora.getFullYear(), 0, 0);
+  const diff = agora - inicio;
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
+
+function desenharCena(msg, tema) {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 420, H = 420;
+
+  // Gradiente céu
+  const gradCeu = ctx.createLinearGradient(0, 0, 0, H * 0.75);
+  gradCeu.addColorStop(0, tema.ceu1);
+  gradCeu.addColorStop(0.5, tema.ceu2);
+  gradCeu.addColorStop(1, tema.horizonte);
+  ctx.fillStyle = gradCeu;
+  ctx.fillRect(0, 0, W, H);
+
+  // Estrelas
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  const estrelas = [[40,30],[80,15],[150,25],[220,10],[290,20],[350,35],[390,15],[60,60],[180,50],[310,55],[420*0.8,40]];
+  estrelas.forEach(([x,y]) => {
+    ctx.beginPath();
+    ctx.arc(x, y, 1.5, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // Sol
+  const solX = W / 2, solY = H * 0.68;
+  const gradSol = ctx.createRadialGradient(solX, solY, 0, solX, solY, 55);
+  gradSol.addColorStop(0, '#FFFFFF');
+  gradSol.addColorStop(0.3, tema.sol);
+  gradSol.addColorStop(1, tema.horizonte);
+  ctx.fillStyle = gradSol;
+  ctx.beginPath();
+  ctx.arc(solX, solY, 50, 0, Math.PI*2);
+  ctx.fill();
+
+  // Raios do sol
+  ctx.strokeStyle = 'rgba(255,220,100,0.35)';
+  ctx.lineWidth = 1.5;
+  for (let i = 0; i < 16; i++) {
+    const ang = (i * Math.PI * 2) / 16;
+    ctx.beginPath();
+    ctx.moveTo(solX + Math.cos(ang)*55, solY + Math.sin(ang)*55);
+    ctx.lineTo(solX + Math.cos(ang)*130, solY + Math.sin(ang)*130);
+    ctx.stroke();
+  }
+
+  // Colinas
+  ctx.fillStyle = '#0a1a0a';
+  ctx.beginPath();
+  ctx.moveTo(0, H);
+  ctx.lineTo(0, H*0.72);
+  ctx.quadraticCurveTo(W*0.25, H*0.58, W*0.5, H*0.65);
+  ctx.quadraticCurveTo(W*0.75, H*0.72, W, H*0.62);
+  ctx.lineTo(W, H);
+  ctx.fill();
+
+  // Árvores esquerda
+  [[30,H*0.72],[60,H*0.68],[90,H*0.70]].forEach(([x,y]) => {
+    ctx.fillStyle = '#0a1a0a';
+    ctx.beginPath();
+    ctx.moveTo(x, y-40);
+    ctx.lineTo(x-12, y);
+    ctx.lineTo(x+12, y);
+    ctx.fill();
+  });
+
+  // Árvores direita
+  [[W-30,H*0.65],[W-60,H*0.62],[W-90,H*0.67]].forEach(([x,y]) => {
+    ctx.fillStyle = '#0a1a0a';
+    ctx.beginPath();
+    ctx.moveTo(x, y-40);
+    ctx.lineTo(x-12, y);
+    ctx.lineTo(x+12, y);
+    ctx.fill();
+  });
+
+  // Texto "* que o dia de hoje seja *"
+  ctx.fillStyle = tema.sub_cor;
+  ctx.font = 'italic 14px Georgia';
+  ctx.textAlign = 'center';
+  ctx.fillText('* que o dia de hoje seja *', W/2, 80);
+
+  // BOM DIA
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.font = 'bold 58px Georgia';
+  ctx.fillText('Bom Dia', W/2+2, 142);
+  ctx.fillStyle = tema.frase_cor;
+  ctx.font = 'bold 58px Georgia';
+  ctx.fillText('Bom Dia', W/2, 140);
+
+  // Sub
+  ctx.fillStyle = tema.sub_cor;
+  ctx.font = 'italic 20px Georgia';
+  ctx.fillText(msg.sub, W/2, 172);
+
+  // Linha
+  ctx.strokeStyle = tema.sub_cor;
+  ctx.lineWidth = 1;
+  ctx.globalAlpha = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(W/2 - 140, 182);
+  ctx.lineTo(W/2 + 140, 182);
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  // Frase
+  ctx.fillStyle = tema.frase_cor;
+  ctx.font = '15px Georgia';
+  const linhas = msg.frase.split('\n');
+  linhas.forEach((linha, i) => {
+    ctx.fillText(linha, W/2, 210 + i * 24);
+  });
+}
+
+function mostrarMensagem(index) {
+  const msg = mensagens[index % mensagens.length];
+  const tema = TEMAS[index % TEMAS.length];
+  desenharCena(msg, tema);
+  indexAtual = index;
+}
+
+function proximaMensagem() {
+  mostrarMensagem((indexAtual + 1) % mensagens.length);
+}
+
+function compartilhar() {
+  const msg = mensagens[indexAtual % mensagens.length];
+  const texto = `🌅 *Bom Dia!* 🌅\n\n_${msg.sub}_\n\n${msg.frase.replace(/\n/g, ' ')}\n\n✨ _Enviado com carinho pelo Irmão Claudio_ 🙏`;
+  const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+  window.open(url, '_blank');
+}
+
+// Atualizar data
+const agora = new Date();
+const dias = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+document.getElementById('data-label').textContent = 
+  `${dias[agora.getDay()]}, ${agora.getDate()} de ${meses[agora.getMonth()]} de ${agora.getFullYear()}`;
+
+// Mostrar mensagem do dia
+mostrarMensagem(getDiaDoAno());
+</script>
+</body>
+</html>
