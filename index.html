@@ -282,8 +282,29 @@ function compartilhar() {
   const msg = mensagens[indexAtual % mensagens.length];
   const nome = assinatura === 'irmao' ? 'Irmão Claudio 🙏' : 'Claudio 😊';
   const texto = `🌅 *Bom Dia!* 🌅\n\n_${msg.sub}_\n\n${msg.frase.replace(/\n/g, ' ')}\n\n✨ _Enviado com carinho por ${nome}_`;
-  const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
-  window.open(url, '_blank');
+  const canvas = document.getElementById('canvas');
+
+  // Tenta compartilhar com imagem (Web Share API nível 2)
+  if (navigator.canShare) {
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], 'bomdia.png', { type: 'image/png' });
+      if (navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], text: texto });
+          return;
+        } catch(e) {
+          // usuário cancelou ou erro, cai no fallback
+        }
+      }
+      // fallback: só texto
+      const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }, 'image/png');
+  } else {
+    // fallback para navegadores sem suporte
+    const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+  }
 }
 
 // Atualizar data
