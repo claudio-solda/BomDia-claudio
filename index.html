@@ -78,9 +78,10 @@
     <button class="btn-share" onclick="compartilhar()">
       📲 Compartilhar no WhatsApp
     </button>
-    <div style="display:flex;gap:8px;margin-bottom:8px">
-    <button id="btn-claudio" onclick="setAssinatura('claudio')" style="flex:1;padding:9px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:13px;cursor:pointer">👤 Claudio</button>
-    <button id="btn-irmao" onclick="setAssinatura('irmao')" style="flex:1;padding:9px;border-radius:50px;border:1.5px solid #4f8ef7;background:#4f8ef7;color:#fff;font-size:13px;cursor:pointer;font-weight:bold">🙏 Irmão Claudio</button>
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+    <button id="btn-claudio" onclick="setAssinatura('claudio')" style="flex:1;padding:9px 4px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:12px;cursor:pointer">👤 Claudio</button>
+    <button id="btn-irmao" onclick="setAssinatura('irmao')" style="flex:1;padding:9px 4px;border-radius:50px;border:1.5px solid #4f8ef7;background:#4f8ef7;color:#fff;font-size:12px;cursor:pointer;font-weight:bold">🙏 Irmão Claudio</button>
+    <button id="btn-kimberly" onclick="setAssinatura('kimberly')" style="flex:1;padding:9px 4px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:12px;cursor:pointer">👨‍👧 Kimberly</button>
   </div>
   <button class="btn-new" onclick="proximaMensagem()">
       🔄 Nova mensagem
@@ -157,6 +158,24 @@ const mensagensGerais = [
   { frase: "Bom dia! Aproveite cada\nminuto, porque hoje também\né um dia único.", sub: "com presença e gratidão" },
 ];
 
+const mensagensKimberly = [
+  { frase: "Bom dia, minha filha!\nQue seu dia seja tão\nespecial quanto você é pra mim.", sub: "com todo amor de pai" },
+  { frase: "Kimberly, filha querida,\nque hoje você conquiste\ntudo que se propuser.", sub: "com orgulho de você" },
+  { frase: "Bom dia, princesa!\nSeu sorriso é a melhor\nparte do meu dia também.", sub: "com carinho de sempre" },
+  { frase: "Que você acorde\nleve, feliz e pronta\npra brilhar hoje, filha.", sub: "com muito amor" },
+  { frase: "Bom dia, Kimberly!\nSeu pai está sempre\ntorcendo por você.", sub: "com orgulho e torcida" },
+  { frase: "Que hoje seja um\ndia bom pra você,\nminha filha amada.", sub: "com carinho de pai" },
+  { frase: "Bom dia! Lembra que\nvocê é capaz de\ntudo que sonhar, filha.", sub: "com fé em você" },
+  { frase: "Kimberly, que seu\ndia seja repleto de\nboas coisas e sorrisos.", sub: "com amor incondicional" },
+  { frase: "Bom dia, minha filha!\nVocê é meu orgulho\ntodos os dias.", sub: "com orgulho verdadeiro" },
+  { frase: "Que essa manhã traga\npaz pro seu coração\ne força pros seus planos.", sub: "com carinho e cuidado" },
+  { frase: "Bom dia, princesa!\nSeja feliz hoje, é\ntudo que eu quero pra você.", sub: "com amor de pai" },
+  { frase: "Kimberly, filha, que\nvocê nunca esqueça o\nquanto é amada e capaz.", sub: "com amor sem medida" },
+  { frase: "Bom dia! Que seus\nsonhos guiem seus passos\nhoje e sempre, filha.", sub: "com fé no seu futuro" },
+  { frase: "Que hoje você se\nsinta orgulhosa de quem\nvocê é, minha filha.", sub: "com orgulho de você" },
+  { frase: "Bom dia, Kimberly!\nVocê ilumina a vida\ndo seu pai todos os dias.", sub: "com carinho enorme" },
+];
+
 const TEMAS = [
   { ceu1: '#0d1b4e', ceu2: '#1a3a7a', sol: '#FFD700', horizonte: '#FF6B35', frase_cor: '#FFF8DC', sub_cor: '#FFD700' },
   { ceu1: '#1a0a3e', ceu2: '#3d1a6e', sol: '#FF9500', horizonte: '#FF4500', frase_cor: '#FFFFFF', sub_cor: '#FFB347' },
@@ -168,7 +187,9 @@ const TEMAS = [
 let indexAtual = -1;
 
 function getMensagens() {
-  return assinatura === 'claudio' ? mensagensGerais : mensagensBiblicas;
+  if (assinatura === 'claudio') return mensagensGerais;
+  if (assinatura === 'kimberly') return mensagensKimberly;
+  return mensagensBiblicas;
 }
 
 function getDiaDoAno() {
@@ -307,21 +328,21 @@ let assinatura = 'irmao';
 
 function setAssinatura(tipo) {
   assinatura = tipo;
-  document.getElementById('btn-claudio').style.background = tipo === 'claudio' ? '#4f8ef7' : '#1a3a7a';
-  document.getElementById('btn-claudio').style.color = tipo === 'claudio' ? '#fff' : '#7aabff';
-  document.getElementById('btn-claudio').style.fontWeight = tipo === 'claudio' ? 'bold' : 'normal';
-  document.getElementById('btn-claudio').style.borderColor = tipo === 'claudio' ? '#4f8ef7' : '#2a5aaa';
-  document.getElementById('btn-irmao').style.background = tipo === 'irmao' ? '#4f8ef7' : '#1a3a7a';
-  document.getElementById('btn-irmao').style.color = tipo === 'irmao' ? '#fff' : '#7aabff';
-  document.getElementById('btn-irmao').style.fontWeight = tipo === 'irmao' ? 'bold' : 'normal';
-  document.getElementById('btn-irmao').style.borderColor = tipo === 'irmao' ? '#4f8ef7' : '#2a5aaa';
+  ['claudio', 'irmao', 'kimberly'].forEach(t => {
+    const btn = document.getElementById('btn-' + t);
+    const ativo = t === tipo;
+    btn.style.background = ativo ? '#4f8ef7' : '#1a3a7a';
+    btn.style.color = ativo ? '#fff' : '#7aabff';
+    btn.style.fontWeight = ativo ? 'bold' : 'normal';
+    btn.style.borderColor = ativo ? '#4f8ef7' : '#2a5aaa';
+  });
   mostrarMensagem(indexAtual < 0 ? getDiaDoAno() : indexAtual);
 }
 
 function compartilhar() {
   const lista = getMensagens();
   const msg = lista[indexAtual % lista.length];
-  const nome = assinatura === 'irmao' ? 'Irmão Claudio 🙏' : 'Claudio 😊';
+  const nome = assinatura === 'irmao' ? 'Irmão Claudio 🙏' : (assinatura === 'kimberly' ? 'Papai ❤️' : 'Claudio 😊');
   const texto = `🌅 *Bom Dia!* 🌅\n\n_${msg.sub}_\n\n${msg.frase.replace(/\n/g, ' ')}\n\n✨ _Enviado com carinho por ${nome}_`;
   const canvas = document.getElementById('canvas');
 
