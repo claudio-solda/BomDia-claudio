@@ -78,10 +78,11 @@
     <button class="btn-share" onclick="compartilhar()">
       📲 Compartilhar no WhatsApp
     </button>
-    <div style="display:flex;gap:6px;margin-bottom:8px">
-    <button id="btn-claudio" onclick="setAssinatura('claudio')" style="flex:1;padding:9px 4px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:12px;cursor:pointer">👤 Claudio</button>
-    <button id="btn-irmao" onclick="setAssinatura('irmao')" style="flex:1;padding:9px 4px;border-radius:50px;border:1.5px solid #4f8ef7;background:#4f8ef7;color:#fff;font-size:12px;cursor:pointer;font-weight:bold">🙏 Irmão Claudio</button>
-    <button id="btn-kimberly" onclick="setAssinatura('kimberly')" style="flex:1;padding:9px 4px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:12px;cursor:pointer">👨‍👧 Kimberly</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+    <button id="btn-claudio" onclick="setAssinatura('claudio')" style="padding:9px 4px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:12px;cursor:pointer">👤 Claudio</button>
+    <button id="btn-irmao" onclick="setAssinatura('irmao')" style="padding:9px 4px;border-radius:50px;border:1.5px solid #4f8ef7;background:#4f8ef7;color:#fff;font-size:12px;cursor:pointer;font-weight:bold">🙏 Irmão Claudio</button>
+    <button id="btn-kimberly" onclick="setAssinatura('kimberly')" style="padding:9px 4px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:12px;cursor:pointer">👨‍👧 Kimberly</button>
+    <button id="btn-priscila" onclick="setAssinatura('priscila')" style="padding:9px 4px;border-radius:50px;border:1.5px solid #2a5aaa;background:#1a3a7a;color:#7aabff;font-size:12px;cursor:pointer">❤️ Priscila</button>
   </div>
   <button class="btn-new" onclick="proximaMensagem()">
       🔄 Nova mensagem
@@ -220,6 +221,49 @@ const mensagensKimberly = [
   { frase: "Bom dia, minha filha!\nQue a vida te trate\ncom todo o carinho que merece.", sub: "com carinho de pai" },
 ];
 
+const mensagensPriscila = [
+  { frase: "Bom dia, meu amor!\nAcordar sabendo que você\nexiste já é motivo de gratidão.", sub: "com amor que não cabe em palavras" },
+  { frase: "Priscila, você é\na certeza mais linda\nque a vida me deu.", sub: "com certeza e gratidão" },
+  { frase: "Bom dia! Que hoje\nvocê sinta o quanto\né amada por mim.", sub: "com amor declarado" },
+  { frase: "Meu amor, escolho\nvocê hoje, ontem\ne por todos os dias.", sub: "com escolha renovada" },
+  { frase: "Bom dia, Priscila!\nSeu abraço é o\nmeu lugar favorito no mundo.", sub: "com saudade de perto" },
+  { frase: "Que essa manhã\nseja tão bonita\nquanto o seu sorriso, amor.", sub: "com admiração sincera" },
+  { frase: "Bom dia! Ao seu\nlado, até os dias\ndifíceis ficam mais leves.", sub: "com gratidão pela parceria" },
+  { frase: "Priscila, você é\nminha parceira, meu porto\ne meu maior amor.", sub: "com amor e parceria" },
+  { frase: "Bom dia, meu amor!\nQue a vida te cubra\nde coisas boas hoje.", sub: "com carinho profundo" },
+  { frase: "Ter você comigo\né o presente mais\nbonito que eu já ganhei.", sub: "com gratidão imensa" },
+  { frase: "Bom dia! Você é\na razão de eu\nquerer ser melhor todo dia.", sub: "com inspiração e amor" },
+  { frase: "Priscila, meu amor\npor você só\ncresce a cada dia.", sub: "com amor que cresce" },
+  { frase: "Bom dia, esposa linda!\nQue seu dia seja\ntão especial quanto você.", sub: "com admiração verdadeira" },
+  { frase: "Você é a pessoa\nmais incrível que eu\nconheço, e é minha.", sub: "com orgulho e amor" },
+  { frase: "Bom dia! Obrigado\npor caminhar ao meu\nlado em tudo, amor.", sub: "com gratidão pela jornada" },
+  { frase: "Priscila, com você\nao lado, qualquer\ndesafio fica menor.", sub: "com força em parceria" },
+  { frase: "Bom dia, meu amor!\nQue hoje você se\nsinta tão amada quanto é.", sub: "com amor incondicional" },
+  { frase: "Você é meu\nporto seguro em\ndias de tempestade.", sub: "com segurança e amor" },
+  { frase: "Bom dia! Cada\ndia ao seu lado\né um dia bem vivido.", sub: "com gratidão diária" },
+  { frase: "Priscila, você\nilumina minha vida\nmais do que imagina.", sub: "com luz e amor" },
+  { frase: "Bom dia, minha esposa!\nQue você tenha um\ndia tão bonito quanto merece.", sub: "com carinho sincero" },
+  { frase: "Escolher você foi\na melhor decisão\nque eu já tomei.", sub: "com certeza de amor" },
+  { frase: "Bom dia! Seu amor\né o meu combustível\npra enfrentar qualquer coisa.", sub: "com força e gratidão" },
+  { frase: "Priscila, você merece\num mundo inteiro\nde coisas boas hoje.", sub: "com desejo sincero" },
+  { frase: "Bom dia, meu amor!\nQue nossa história continue\nsendo linda como sempre foi.", sub: "com amor de longa data" },
+  { frase: "Ao seu lado eu\naprendi o que é\namar de verdade.", sub: "com amor verdadeiro" },
+  { frase: "Bom dia! Você é\nforte, linda e o\nmeu maior orgulho.", sub: "com orgulho e admiração" },
+  { frase: "Priscila, obrigado\npor ser exatamente\nquem você é.", sub: "com gratidão genuína" },
+  { frase: "Bom dia, meu amor!\nHoje e sempre,\nmeu coração é seu.", sub: "com entrega total" },
+  { frase: "Você faz da\nminha vida algo\nmuito mais bonito.", sub: "com beleza e amor" },
+  { frase: "Bom dia, esposa linda!\nQue esse dia te\ntraga só coisas boas.", sub: "com carinho e cuidado" },
+  { frase: "Priscila, cada\nano ao seu lado\nsó aumenta meu amor.", sub: "com amor que dura" },
+  { frase: "Bom dia! Você é\na paz que eu\nencontro depois de um dia difícil.", sub: "com paz e gratidão" },
+  { frase: "Meu amor, que\nvocê nunca duvide\ndo quanto é amada.", sub: "com certeza declarada" },
+  { frase: "Bom dia, Priscila!\nSeu carinho transforma\nmeus dias mais simples.", sub: "com carinho transformador" },
+  { frase: "Você é sinônimo\nde lar pra mim,\nonde quer que estejamos.", sub: "com lar e amor" },
+  { frase: "Bom dia, meu amor!\nQue a gente continue\nescrevendo essa história linda.", sub: "com futuro e amor" },
+  { frase: "Priscila, minha esposa,\nmeu amor por você\né maior que qualquer palavra.", sub: "com amor imenso" },
+  { frase: "Bom dia! Obrigado\npor todos os dias\nao meu lado, meu amor.", sub: "com gratidão eterna" },
+  { frase: "Bom dia, meu amor!\nQue você se sinta\namada em cada detalhe hoje.", sub: "com carinho e fé" },
+];
+
 const TEMAS = [
   { ceu1: '#0d1b4e', ceu2: '#1a3a7a', sol: '#FFD700', horizonte: '#FF6B35', frase_cor: '#FFF8DC', sub_cor: '#FFD700' },
   { ceu1: '#1a0a3e', ceu2: '#3d1a6e', sol: '#FF9500', horizonte: '#FF4500', frase_cor: '#FFFFFF', sub_cor: '#FFB347' },
@@ -233,6 +277,7 @@ let indexAtual = -1;
 function getMensagens() {
   if (assinatura === 'claudio') return mensagensGerais;
   if (assinatura === 'kimberly') return mensagensKimberly;
+  if (assinatura === 'priscila') return mensagensPriscila;
   return mensagensBiblicas;
 }
 
@@ -384,7 +429,7 @@ let assinatura = 'irmao';
 
 function setAssinatura(tipo) {
   assinatura = tipo;
-  ['claudio', 'irmao', 'kimberly'].forEach(t => {
+  ['claudio', 'irmao', 'kimberly', 'priscila'].forEach(t => {
     const btn = document.getElementById('btn-' + t);
     const ativo = t === tipo;
     btn.style.background = ativo ? '#4f8ef7' : '#1a3a7a';
@@ -398,7 +443,7 @@ function setAssinatura(tipo) {
 function compartilhar() {
   const lista = getMensagens();
   const msg = lista[indexAtual % lista.length];
-  const nome = assinatura === 'irmao' ? 'Irmão Claudio 🙏' : (assinatura === 'kimberly' ? 'Papai ❤️' : 'Claudio 😊');
+  const nome = assinatura === 'irmao' ? 'Irmão Claudio 🙏' : (assinatura === 'kimberly' ? 'Papai ❤️' : (assinatura === 'priscila' ? 'Seu amor ❤️' : 'Claudio 😊'));
   const texto = `🌅 *Bom Dia!* 🌅\n\n_${msg.sub}_\n\n${msg.frase.replace(/\n/g, ' ')}\n\n✨ _Enviado com carinho por ${nome}_`;
   const canvas = document.getElementById('canvas');
 
