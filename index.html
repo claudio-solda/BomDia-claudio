@@ -90,7 +90,7 @@
 </div>
 
 <script>
-const mensagens = [
+const mensagensBiblicas = [
   { frase: "Cada manhã traz uma nova chance\nde fazer algo bonito com a vida.\nAproveite cada momento.", sub: "com muita luz e paz" },
   { frase: "Que a graça do Senhor\nesteja sobre você hoje\ne sempre.", sub: "com fé e esperança" },
   { frase: "Um novo dia, uma nova\noportunidade de ser\nmelhor que ontem.", sub: "com força e determinação" },
@@ -124,6 +124,39 @@ const mensagens = [
   { frase: "Que seus sonhos sejam\ngrandes e sua coragem\nainda maior para realizá-los.", sub: "com sonhos e coragem" },
 ];
 
+const mensagensGerais = [
+  { frase: "Que seu dia comece leve\ne termine ainda melhor.\nAproveite cada instante.", sub: "com energia boa" },
+  { frase: "Um novo dia chegou,\ntraga um sorriso bonito\ne espalhe por onde passar.", sub: "com muita alegria" },
+  { frase: "Que a manhã traga\nclareza pra sua mente\ne calma pro seu coração.", sub: "com paz e equilíbrio" },
+  { frase: "Respire, sorria e\nvá com tudo pra cima\ndesse novo dia.", sub: "com leveza e disposição" },
+  { frase: "Cada dia é uma\npágina nova pra escrever\na sua própria história.", sub: "com coragem pra recomeçar" },
+  { frase: "Que seu café esteja\nquentinho e sua manhã\nainda mais gostosa.", sub: "com carinho especial" },
+  { frase: "A vida é feita de\npequenos momentos bons.\nComece o seu agora.", sub: "com gratidão simples" },
+  { frase: "Bom dia! Que hoje\nvenham boas notícias e\nmelhores ainda venham depois.", sub: "com boas energias" },
+  { frase: "Sorria pro espelho,\nvocê merece um dia\ntão bonito quanto você.", sub: "com autoestima em alta" },
+  { frase: "Que essa manhã renove\nsuas forças e ilumine\nseus planos pra hoje.", sub: "com foco e determinação" },
+  { frase: "Um dia novo, uma\nchance nova de ser\nfeliz do seu jeito.", sub: "com simplicidade e alegria" },
+  { frase: "Que a natureza te\ninspire hoje: o sol\nnasce todos os dias pra todos.", sub: "com renovação" },
+  { frase: "Vai dar tudo certo.\nRespira, confia e\nsegue com o seu ritmo.", sub: "com confiança tranquila" },
+  { frase: "Que os pequenos detalhes\nde hoje te façam\nsorrir sem motivo aparente.", sub: "com leveza no coração" },
+  { frase: "Bom dia pra você\nque não desiste, que\nsegue tentando todos os dias.", sub: "com persistência e força" },
+  { frase: "Que a sua manhã\nseja regada de café,\nboas ideias e bom humor.", sub: "com energia positiva" },
+  { frase: "Hoje é um bom\ndia pra recomeçar o\nque for preciso recomeçar.", sub: "com coragem renovada" },
+  { frase: "Sorria, o mundo fica\nmais bonito quando você\nestá de bom humor.", sub: "com alegria contagiante" },
+  { frase: "Que você encontre motivos\npra sorrir em cada\ncanto do seu dia.", sub: "com gratidão pelas pequenas coisas" },
+  { frase: "Bom dia! Que sua\nsemana seja produtiva e\nseus dias sejam leves.", sub: "com equilíbrio e foco" },
+  { frase: "A vida é curta\ndemais pra não aproveitar\num bom dia de sol.", sub: "com leveza e bom humor" },
+  { frase: "Que hoje você tenha\ntempo pra tudo que\nimporta e paz pro resto.", sub: "com prioridades certas" },
+  { frase: "Bom dia! Vista seu\nmelhor sorriso e vá\nconquistar o seu dia.", sub: "com atitude positiva" },
+  { frase: "Que cada conquista de\nhoje, pequena ou grande,\nseja motivo de orgulho.", sub: "com orgulho do seu esforço" },
+  { frase: "Comece o dia com\ngratidão pelo que você\njá tem e conquistou.", sub: "com gratidão genuína" },
+  { frase: "Bom dia! Que a\nsua energia hoje seja\ncontagiante pra quem estiver por perto.", sub: "com boas vibrações" },
+  { frase: "Que a rotina não\napague o brilho dos\nseus olhos hoje.", sub: "com brilho e leveza" },
+  { frase: "Um bom café, um\nbom dia e uma\nboa companhia. O que mais precisa?", sub: "com simplicidade boa" },
+  { frase: "Que você tenha um\ndia tranquilo, produtivo e\ncheio de boas conversas.", sub: "com tranquilidade e boas trocas" },
+  { frase: "Bom dia! Aproveite cada\nminuto, porque hoje também\né um dia único.", sub: "com presença e gratidão" },
+];
+
 const TEMAS = [
   { ceu1: '#0d1b4e', ceu2: '#1a3a7a', sol: '#FFD700', horizonte: '#FF6B35', frase_cor: '#FFF8DC', sub_cor: '#FFD700' },
   { ceu1: '#1a0a3e', ceu2: '#3d1a6e', sol: '#FF9500', horizonte: '#FF4500', frase_cor: '#FFFFFF', sub_cor: '#FFB347' },
@@ -133,6 +166,10 @@ const TEMAS = [
 ];
 
 let indexAtual = -1;
+
+function getMensagens() {
+  return assinatura === 'claudio' ? mensagensGerais : mensagensBiblicas;
+}
 
 function getDiaDoAno() {
   const agora = new Date();
@@ -254,14 +291,16 @@ function desenharCena(msg, tema) {
 }
 
 function mostrarMensagem(index) {
-  const msg = mensagens[index % mensagens.length];
+  const lista = getMensagens();
+  const msg = lista[index % lista.length];
   const tema = TEMAS[index % TEMAS.length];
   desenharCena(msg, tema);
   indexAtual = index;
 }
 
 function proximaMensagem() {
-  mostrarMensagem((indexAtual + 1) % mensagens.length);
+  const lista = getMensagens();
+  mostrarMensagem((indexAtual + 1) % lista.length);
 }
 
 let assinatura = 'irmao';
@@ -276,10 +315,12 @@ function setAssinatura(tipo) {
   document.getElementById('btn-irmao').style.color = tipo === 'irmao' ? '#fff' : '#7aabff';
   document.getElementById('btn-irmao').style.fontWeight = tipo === 'irmao' ? 'bold' : 'normal';
   document.getElementById('btn-irmao').style.borderColor = tipo === 'irmao' ? '#4f8ef7' : '#2a5aaa';
+  mostrarMensagem(indexAtual < 0 ? getDiaDoAno() : indexAtual);
 }
 
 function compartilhar() {
-  const msg = mensagens[indexAtual % mensagens.length];
+  const lista = getMensagens();
+  const msg = lista[indexAtual % lista.length];
   const nome = assinatura === 'irmao' ? 'Irmão Claudio 🙏' : 'Claudio 😊';
   const texto = `🌅 *Bom Dia!* 🌅\n\n_${msg.sub}_\n\n${msg.frase.replace(/\n/g, ' ')}\n\n✨ _Enviado com carinho por ${nome}_`;
   const canvas = document.getElementById('canvas');
